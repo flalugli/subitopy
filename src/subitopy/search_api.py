@@ -3,7 +3,7 @@ import math
 from itertools import chain
 from datetime import datetime
 from .errors import MunicipalityError
-from .utils import AsyncRequest, QueryParameters
+from .utils import AsyncRequest, QueryParameters, Item
 
 
 class Search:
@@ -137,7 +137,7 @@ class Search:
         data = list(chain(*results))  # get items from each page all in one array
         return data
 
-    def get_item_shortinfo(self, item: dict):
+    def get_item_shortinfo(self, item: dict) -> Item:
         # TODO
         # Make typeddict for item
         item_name = item["subject"]
@@ -170,15 +170,15 @@ class Search:
                     shipping = True
 
         url = item["urls"]["default"]
-        item_info: dict = {
-            "name": item_name,
-            "description": description,
-            "images": images,
-            "date": datetime.strptime(insertion_date, '%Y-%m-%d %H:%M:%S'),
-            "price": price,
-            "sold": sold,
-            "city": city,
-            "shipping": shipping,
-            "url": url,
-        }
+        item_info: Item = Item(
+            name= item_name,
+            descritpion= description,
+            images=images,
+            date= datetime.strptime(insertion_date, '%Y-%m-%d %H:%M:%S'),
+            price= price,
+            sold= sold,
+            city= city,
+            shipping= shipping,
+            url= url,
+        )
         return item_info
