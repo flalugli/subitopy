@@ -1,1 +1,1 @@
-from .search_api import Subipy
+from .search_api import Search

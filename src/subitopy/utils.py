@@ -1,5 +1,7 @@
 import asyncio
 from dataclasses import dataclass, field
+from typing import TypedDict
+import datetime
 
 import aiohttp
 
@@ -195,3 +197,17 @@ class AsyncRequest:
 
     async def get(self, url: str, *args, **kwargs) -> aiohttp.ClientResponse | None:
         return await self.request(request_type="get", url=url, *args, **kwargs)
+
+@dataclass
+class Item():
+    name : str
+    descritpion : str
+    images : str
+    date : datetime.datetime
+    city : str
+    price : int
+    sold : str
+    shipping : bool
+    city : str
+    url : str
+
