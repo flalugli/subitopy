@@ -1,6 +1,5 @@
 import asyncio
-from dataclasses import dataclass, field
-from typing import TypedDict
+from dataclasses import dataclass
 import datetime
 
 import aiohttp
