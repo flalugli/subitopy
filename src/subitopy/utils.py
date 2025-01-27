@@ -214,4 +214,22 @@ class Item:
     def __post_init__(self):
         self.sort_index = self.price
 
+@dataclass
+class ItemCollection:
 
+    Itemlist: list[Item]
+    items_number : int = field(init=False)
+    mean_price : int = field(init=False)
+
+    def __post_init__(self):
+        self.items_number = len(self.Itemlist)
+        self.mean_price=statistics.fmean([x.price for x in self.Itemlist])
+    
+    def order_by_price(self):
+        self.Itemlist.sort()
+
+    def return_list_priceorder(self) -> list[Item]:
+        return sorted(self.Itemlist)
+    
+    def return_list_timeorder(self) -> list[Item]:
+        return sorted(self.Itemlist,key=lambda x: x.date.timestamp())
