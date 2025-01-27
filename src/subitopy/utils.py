@@ -1,6 +1,7 @@
 import asyncio
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import datetime
+import statistics
 
 import aiohttp
 
@@ -197,8 +198,8 @@ class AsyncRequest:
     async def get(self, url: str, *args, **kwargs) -> aiohttp.ClientResponse | None:
         return await self.request(request_type="get", url=url, *args, **kwargs)
 
-@dataclass
-class Item():
+@dataclass(order=True) #standard order is by price
+class Item:
     name : str
     descritpion : str
     images : str
@@ -209,4 +210,8 @@ class Item():
     shipping : bool
     city : str
     url : str
+
+    def __post_init__(self):
+        self.sort_index = self.price
+
 
