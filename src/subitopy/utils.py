@@ -1,7 +1,7 @@
 import asyncio
-from dataclasses import dataclass, field
 import datetime
 import statistics
+from dataclasses import dataclass, field
 
 import aiohttp
 
@@ -168,6 +168,7 @@ class QueryParameters:
         "": "",
     }
 
+
 class AsyncRequest:
     def __init__(self, tries: int = 3, timeout: int = 1) -> None:
         self.tries = tries
@@ -198,38 +199,40 @@ class AsyncRequest:
     async def get(self, url: str, *args, **kwargs) -> aiohttp.ClientResponse | None:
         return await self.request(request_type="get", url=url, *args, **kwargs)
 
-@dataclass(order=True) #standard order is by price
+
+@dataclass(order=True)  # standard order is by price
 class Item:
-    name : str
-    descritpion : str
-    images : str
-    date : datetime.datetime
-    city : str
-    price : int
-    sold : str
-    shipping : bool
-    city : str
-    url : str
+    name: str
+    descritpion: str
+    images: str
+    date: datetime.datetime
+    city: str
+    price: int
+    sold: str
+    shipping: bool
+    city: str
+    url: str
 
     def __post_init__(self):
         self.sort_index = self.price
+
 
 @dataclass
 class ItemCollection:
 
     Itemlist: list[Item]
-    items_number : int = field(init=False)
-    mean_price : int = field(init=False)
+    items_number: int = field(init=False)
+    mean_price: int = field(init=False)
 
     def __post_init__(self):
         self.items_number = len(self.Itemlist)
-        self.mean_price=statistics.fmean([x.price for x in self.Itemlist])
-    
+        self.mean_price = statistics.fmean([x.price for x in self.Itemlist])
+
     def order_by_price(self):
         self.Itemlist.sort()
 
     def return_list_priceorder(self) -> list[Item]:
         return sorted(self.Itemlist)
-    
+
     def return_list_timeorder(self) -> list[Item]:
-        return sorted(self.Itemlist,key=lambda x: x.date.timestamp())
+        return sorted(self.Itemlist, key=lambda x: x.date.timestamp())

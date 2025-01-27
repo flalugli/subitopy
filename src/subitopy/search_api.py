@@ -1,9 +1,10 @@
 import asyncio
 import math
-from itertools import chain
 from datetime import datetime
+from itertools import chain
+
 from .errors import MunicipalityError
-from .utils import AsyncRequest, QueryParameters, Item
+from .utils import AsyncRequest, Item, QueryParameters
 
 
 class Search:
@@ -66,7 +67,7 @@ class Search:
         sort_by: int | str = QueryParameters.Sort.DATE,
         ad_type: int | str = QueryParameters.Ad_Type.FOR_SALE,
         region: int | str = QueryParameters.Regions.EMPTY,
-        titlesearch_only: bool = True, #this is False by standard on the site but it narrows down the research
+        titlesearch_only: bool = True,  # this is False by standard on the site but it narrows down the research
         shipping_only: bool = False,
         municipality: str = "",
         pages: int | str = 1,
@@ -171,14 +172,14 @@ class Search:
 
         url = item["urls"]["default"]
         item_info: Item = Item(
-            name= item_name,
-            descritpion= description,
+            name=item_name,
+            descritpion=description,
             images=images,
-            date= datetime.strptime(insertion_date, '%Y-%m-%d %H:%M:%S'),
-            price= price,
-            sold= sold,
-            city= city,
-            shipping= shipping,
-            url= url,
+            date=datetime.strptime(insertion_date, "%Y-%m-%d %H:%M:%S"),
+            price=price,
+            sold=sold,
+            city=city,
+            shipping=shipping,
+            url=url,
         )
         return item_info
