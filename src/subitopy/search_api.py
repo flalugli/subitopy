@@ -9,6 +9,7 @@ from .utils import AsyncRequest, Item, ItemCollection, QueryParameters
 
 class Search:
     "wrapper for the subito.it search API"
+
     def __init__(
         self,
         base_url: str = "https://www.subito.it",
@@ -25,7 +26,7 @@ class Search:
 
     def bool2query(self, arg: bool) -> str:
 
-        #TODO add checks
+        # TODO add checks
         result = str(arg).lower()
 
         return result
@@ -45,11 +46,11 @@ class Search:
         # get page of items with short info about them
 
         page = await self.get_page(query)
-        items=[]
+        items = []
         for item in page:
             item_shortinfo = self.get_item_shortinfo(item)
             items.append(item_shortinfo)
-        
+
         page_short = ItemCollection(items)
 
         return page_short
