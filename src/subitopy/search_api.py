@@ -8,7 +8,7 @@ from .utils import AsyncRequest, Item, ItemCollection, QueryParameters
 
 
 class Search:
-
+    "wrapper for the subito.it search API"
     def __init__(
         self,
         base_url: str = "https://www.subito.it",
