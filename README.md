@@ -1,9 +1,24 @@
 # Subito API
+![Static Badge](https://img.shields.io/github/license/flalugli/subitopy)
+
+
 An unofficial async wrapper for the Subito.it website API, especially the search API
 
----
-The intended use of this library is
-- checking many item posts in real-time  
-- checking multiple pages of items' data at the same time  
+## Table of Contents
+- [Subito API](#subito-api)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
     
-For other more straightforward approches, I suggest using a synchronous API wrapper for simpler management.
+## Installation
+
+To install the project locally follow these steps:
+
+1. Clone the repository :
+    ```sh
+    git clone https://github.com/flalugli/subitopy.git
+    ```
+
+2. Install dependencies:
+    ```sh
+    pip install -r requirements.txt
+    ```
