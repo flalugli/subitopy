@@ -220,13 +220,27 @@ class Item:
 @dataclass
 class ItemCollection:
 
-    Itemlist: list[Item]
+    Itemlist: list[Item] = field(default_factory=list)
     items_number: int = field(init=False)
     mean_price: int = field(init=False)
 
+    def __iter__(self):
+        return iter(self.Itemlist)
+
+    def __add__(self, new_itemlist):
+        final_itemlist = self.Itemlist + new_itemlist.Itemlist
+        return ItemCollection(final_itemlist)
+        
+    #add __radd__ method if needed
+
     def __post_init__(self):
-        self.items_number = len(self.Itemlist)
-        self.mean_price = statistics.fmean([x.price for x in self.Itemlist])
+        if len(self.Itemlist) > 0:
+            self.items_number = len(self.Itemlist)
+            self.mean_price = statistics.fmean([x.price for x in self.Itemlist])
+
+    def collection_append(self, new_item:Item):
+        self.Itemlist.append(new_item)
+        self.__post_init__()
 
     def order_by_price(self):
         self.Itemlist.sort()

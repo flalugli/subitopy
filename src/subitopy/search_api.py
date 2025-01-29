@@ -4,7 +4,7 @@ from datetime import datetime
 from itertools import chain
 
 from .errors import MunicipalityError
-from .utils import AsyncRequest, Item, QueryParameters
+from .utils import AsyncRequest, Item, QueryParameters, ItemCollection
 
 
 class Search:
@@ -41,16 +41,16 @@ class Search:
         else:
             return page
 
-    async def get_page_short(self, query: dict):
+    async def get_page_short(self, query: dict) -> ItemCollection:
         # get page of items with short info about them
 
         page = await self.get_page(query)
 
-        page_short = []
+        page_short = ItemCollection()
 
         for item in page:
             item_shortinfo = self.get_item_shortinfo(item)
-            page_short.append(item_shortinfo)
+            page_short.collection_append(item_shortinfo)
 
         return page_short
 
@@ -131,7 +131,8 @@ class Search:
                 "lim": endpoint,
             }
             if short:
-                tasks.append(asyncio.ensure_future(self.get_page_short(query)))
+                r=self.get_page_short(query)
+                tasks.append(asyncio.ensure_future(r))
             else:
                 tasks.append(asyncio.ensure_future(self.get_page(query)))
         results = await asyncio.gather(*tasks)
@@ -139,8 +140,7 @@ class Search:
         return data
 
     def get_item_shortinfo(self, item: dict) -> Item:
-        # TODO
-        # Make typeddict for item
+        
         item_name = item["subject"]
         description = item["body"]
         city = item["geo"]["city"]["short_name"]
