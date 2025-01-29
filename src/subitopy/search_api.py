@@ -45,12 +45,12 @@ class Search:
         # get page of items with short info about them
 
         page = await self.get_page(query)
-
-        page_short = ItemCollection()
-
+        items=[]
         for item in page:
             item_shortinfo = self.get_item_shortinfo(item)
-            page_short.collection_append(item_shortinfo)
+            items.append(item_shortinfo)
+        
+        page_short = ItemCollection(items)
 
         return page_short
 
