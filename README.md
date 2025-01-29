@@ -18,7 +18,7 @@ To install the project locally follow these steps:
     git clone https://github.com/flalugli/subitopy.git
     ```
 
-2. Install dependencies:
+2. Install dependencies :
     ```sh
     pip install -r requirements.txt
     ```
