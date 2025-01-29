@@ -73,7 +73,7 @@ class Search:
         pages: int | str = 1,
         startingpage: int = 0,
         short: bool = True,
-    ):
+    ) -> list|ItemCollection:
         # short is short format with less informations for each item and on by default, pages should never be more than 20, proxy might not work otherwise and you might get ratelimited
 
         if region == 0:
@@ -133,10 +133,14 @@ class Search:
             if short:
                 r=self.get_page_short(query)
                 tasks.append(asyncio.ensure_future(r))
+                results = await asyncio.gather(*tasks)
+                item_list=list(chain(*results))
+                data = ItemCollection(item_list)  # get items from each page all in 1 ItemCollection
             else:
                 tasks.append(asyncio.ensure_future(self.get_page(query)))
-        results = await asyncio.gather(*tasks)
-        data = list(chain(*results))  # get items from each page all in one array
+                results = await asyncio.gather(*tasks)
+                data = list(chain(*results))  # get items from each page all in one array
+    
         return data
 
     def get_item_shortinfo(self, item: dict) -> Item:

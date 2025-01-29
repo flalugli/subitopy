@@ -231,6 +231,16 @@ class ItemCollection:
         final_itemlist = self.Itemlist + new_itemlist.Itemlist
         return ItemCollection(final_itemlist)
         
+    def __getitem__(self, key:int):
+        return self.Itemlist[key]
+    
+    def __setitem__(self, key:int, value:Item):
+        self.Itemlist[key] = value
+        self.__post_init__()
+    
+    def __len__(self):
+        return len(self.Itemlist)
+    
     #add __radd__ method if needed
 
     def __post_init__(self):
