@@ -230,25 +230,25 @@ class ItemCollection:
     def __add__(self, new_itemlist):
         final_itemlist = self.Itemlist + new_itemlist.Itemlist
         return ItemCollection(final_itemlist)
-        
-    def __getitem__(self, key:int):
+
+    def __getitem__(self, key: int):
         return self.Itemlist[key]
-    
-    def __setitem__(self, key:int, value:Item):
+
+    def __setitem__(self, key: int, value: Item):
         self.Itemlist[key] = value
         self.__post_init__()
-    
+
     def __len__(self):
         return len(self.Itemlist)
-    
-    #add __radd__ method if needed
+
+    # add __radd__ method if needed
 
     def __post_init__(self):
         if len(self.Itemlist) > 0:
             self.items_number = len(self.Itemlist)
             self.mean_price = statistics.fmean([x.price for x in self.Itemlist])
 
-    def collection_append(self, new_item:Item):
+    def collection_append(self, new_item: Item):
         self.Itemlist.append(new_item)
         self.__post_init__()
 
