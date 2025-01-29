@@ -25,7 +25,7 @@ class Search:
 
     def bool2query(self, arg: bool) -> str:
 
-        # raise error if this doesnt work
+        #TODO add checks
         result = str(arg).lower()
 
         return result
