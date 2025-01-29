@@ -241,8 +241,6 @@ class ItemCollection:
     def __len__(self):
         return len(self.Itemlist)
 
-    # add __radd__ method if needed
-
     def __post_init__(self):
         if len(self.Itemlist) > 0:
             self.items_number = len(self.Itemlist)
