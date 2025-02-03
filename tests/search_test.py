@@ -16,7 +16,8 @@ pytest_plugins = ("pytest_asyncio",)
 @pytest.mark.asyncio
 async def test_fetch_data():
     search = subitopy.Search()
-    data_short = await search.search(itemname="Iphone 14")
-    data_long = await search.search(itemname="Iphone 14", short=False)
+    item = "Iphone 14"
+    data_short = await search.search(itemname=item)
+    data_long = await search.search(itemname=item, short=False)
     assert len(data_short) > 0
     assert len(data_long) > 0
