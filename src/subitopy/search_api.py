@@ -44,6 +44,23 @@ class Search:
             return page
 
     async def get_page_short(self, query: dict) -> ItemCollection:
+        """Returns the items in a page (list of 100 items) from the subito api as a collection of Item objects
+
+        Parameters
+        ----------
+        query : dict
+            query passed to the api, for formatting references please check the search function
+
+        Returns
+        -------
+        ItemCollection
+            Collection of the items in the page with their attributes 
+
+        Raises
+        ------
+        MunicipalityError
+            
+        """
         # get page of items with short info about them
 
         page = await self.get_page(query)
