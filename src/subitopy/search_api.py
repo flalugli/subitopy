@@ -24,7 +24,8 @@ class Search:
         self.proxy = proxy
         self.request = AsyncRequest(tries=3)
 
-    def bool2query(self, arg: bool) -> str:
+    def _bool2query(self, arg: bool) -> str:
+        "Transforms bools to strings, used for queries"
 
         # TODO add checks
         result = str(arg).lower()
@@ -106,8 +107,8 @@ class Search:
                 "r": region,
                 "to": str(municipality),
                 "t": ad_type,
-                "qso": self.bool2query(titlesearch_only),
-                "shp": self.bool2query(shipping_only),
+                "qso": self._bool2query(titlesearch_only),
+                "shp": self._bool2query(shipping_only),
                 "sort": sort_by,
                 "start": 0,
                 "lim": 1,
@@ -125,8 +126,8 @@ class Search:
                 "r": region,
                 "to": str(municipality),
                 "t": ad_type,
-                "qso": self.bool2query(titlesearch_only),
-                "shp": self.bool2query(shipping_only),
+                "qso": self._bool2query(titlesearch_only),
+                "shp": self._bool2query(shipping_only),
                 "sort": sort_by,
                 "start": startingpoint,
                 "lim": endpoint,
