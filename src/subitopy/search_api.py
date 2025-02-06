@@ -48,7 +48,7 @@ class Search:
 
         return result
 
-    async def get_page(self, query: dict, items_only: bool = True):
+    async def get_page(self, query: dict, items_only: bool = True) -> dict:
 
         page: dict = await self.request.get(
             url=self.search_api_url, params=query, proxy=self.proxy
