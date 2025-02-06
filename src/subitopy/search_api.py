@@ -25,7 +25,23 @@ class Search:
         self.request = AsyncRequest(tries=3)
 
     def _bool2query(self, arg: bool) -> str:
-        "Transforms bools to strings, used for queries"
+        """Transforms bool to query parameters
+
+        Parameters
+        ----------
+        arg : bool
+            boolean to transform
+
+        Returns
+        -------
+        str
+            query string
+
+        Raises
+        ------
+        MunicipalityError
+
+        """
 
         # TODO add checks
         result = str(arg).lower()
@@ -54,12 +70,12 @@ class Search:
         Returns
         -------
         ItemCollection
-            Collection of the items in the page with their attributes 
+            Collection of the items in the page with their attributes
 
         Raises
         ------
         MunicipalityError
-            
+
         """
         # get page of items with short info about them
 
