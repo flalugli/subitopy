@@ -16,6 +16,17 @@ class Search:
         api_version: int = 1,
         proxy: str | None = None,
     ) -> None:
+        """
+        Parameters
+        ----------
+        base_url : _type_, optional
+            url for api calls, by default "https://www.subito.it"
+        api_version : int, optional
+            api version you want to use, by default 1
+        proxy : str | None, optional
+            proxy, if passed all the requests will be made passing through this proxy , by default None
+
+        """
 
         self.api_version = api_version
         self.base_url = base_url
