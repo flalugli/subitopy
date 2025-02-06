@@ -144,6 +144,43 @@ class Search:
         startingpage: int = 0,
         short: bool = True,
     ) -> list | ItemCollection:
+        """_summary_
+
+        Parameters
+        ----------
+        itemname : str
+            name of the item to research, it's the ad title
+        category : int | str, optional
+            category to which the item belongs, accepts QueryParameters.Categories, by default QueryParameters.Categories.EMPTY
+        page_results : int, optional
+            number of results per page, can vary from 0 to 100, by default 100
+        sort_by : int | str, optional
+            determines how the matches will be sorted, accepts QueryParameters.Sort, by default QueryParameters.Sort.DATE
+        ad_type : int | str, optional
+            ad type, can be for sale or wanting, accepts QueryParameters.Ad_Type, by default QueryParameters.Ad_Type.FOR_SALE
+        region : int | str, optional
+            region where the ad is located, accepts QueryParameters.Regions, by default QueryParameters.Regions.EMPTY
+        titlesearch_only : bool, optional
+            if set to true all the searches will have to match the words in the title, otherwise they can also match the description, by default True
+        municipality : str, optional
+            the municipality where the ad is located, by default ""
+        pages : int | str, optional
+            number of pages retrieved by the api, it's suggested to limit of pages fetched as this could cause ip limitations, by default 1
+        startingpage : int, optional
+            the starting page, by default 0
+        short : bool, optional
+            if set to true the function will perform the get_item_shortinfo function on every item ad, by default True
+
+        Returns
+        -------
+        list | ItemCollection
+            a collection of Item object that automatically performs some statistics on the item prices whenever a new object is added
+
+        Raises
+        ------
+        MunicipalityError
+            
+        """
         # short is short format with less informations for each item and on by default, pages should never be more than 20, proxy might not work otherwise and you might get ratelimited
 
         if region == 0:
