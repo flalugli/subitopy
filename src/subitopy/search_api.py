@@ -144,7 +144,7 @@ class Search:
         startingpage: int = 0,
         short: bool = True,
     ) -> list | ItemCollection:
-        """_summary_
+        """search api call
 
         Parameters
         ----------
