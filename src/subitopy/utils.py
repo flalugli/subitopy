@@ -200,6 +200,11 @@ class AsyncRequest:
         return await self.request(request_type="get", url=url, *args, **kwargs)
 
 
+@dataclass
+class Advertiser:
+    user_id : int
+    is_company : bool
+
 @dataclass(order=True)  # standard order is by price
 class Item:
     name: str
@@ -207,16 +212,16 @@ class Item:
     price: int
     url: str
     date: datetime.datetime
-    condition : str
+    condition: str
     city: str
     sold: str
     shipping: bool
     city: str
-    images: str
+    advertiser : Advertiser
+    images: tuple[str]
 
     def __post_init__(self):
         self.sort_index = self.price
-
 
 @dataclass
 class ItemCollection:

@@ -4,7 +4,7 @@ from datetime import datetime
 from itertools import chain
 
 from .errors import MunicipalityError
-from .utils import AsyncRequest, Item, ItemCollection, QueryParameters
+from .utils import AsyncRequest, Item, ItemCollection, QueryParameters, Advertiser
 
 
 class Search:
@@ -283,7 +283,10 @@ class Search:
         description = item["body"]
         city = item["geo"]["city"]["short_name"]
         insertion_date = item["dates"]["display"]
-                
+        
+        adv_dict = item["advertiser"]
+        is_company= True if adv_dict["company"] == True else False
+        advertiser = Advertiser(user_id=adv_dict["user_id"],is_company=is_company)
 
         images = ()
         all_images = item["images"]
@@ -300,7 +303,9 @@ class Search:
         condition = "Sconosciuta"
 
         for f in features:
-            if f["uri"] == "/price" and price == 0: #and avoids going through the checks if the value has been found
+            if (
+                f["uri"] == "/price" and price == 0
+            ):  # and avoids going through the checks if the value has been found
                 price = int(f["values"][0]["key"])
             if f["uri"] == "/transaction_status" and sold == "NO":
                 sold = f["values"][0]["value"]
@@ -323,6 +328,7 @@ class Search:
             condition=condition,
             city=city,
             shipping=shipping,
+            advertiser=advertiser,
             url=url,
         )
         return item_info
