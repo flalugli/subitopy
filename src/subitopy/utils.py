@@ -222,22 +222,12 @@ class ItemCollection:
 
     Itemlist: list[Item] = field(default_factory=list)
     items_number: int = field(init=False)
-    mean_price: float = field(
-        init=False
-    )  # think about using students' t since the dataset is relatively small
-    median: int = field(init=False)
-    stdev: float = field(init=False)
 
     def __post_init__(
         self,
     ):  # this makes it highly inefficient, maybe move it to a custom function
         if len(self.Itemlist) > 0:
             self.items_number = len(self.Itemlist)
-            items_prices = [x.price for x in self.Itemlist]
-            self.mean_price = statistics.fmean(items_prices)
-            self.median = statistics.median(items_prices)
-            if self.items_number > 1:
-                self.stdev = round(statistics.stdev(items_prices), 2)
 
     def __iter__(self):
         return iter(self.Itemlist)
@@ -251,7 +241,7 @@ class ItemCollection:
 
     def __setitem__(self, key: int, value: Item):
         self.Itemlist[key] = value
-        self.__post_init__()
+        self.__post_init__()  # check if this is even used ever
 
     def __len__(self):
         return len(self.Itemlist)
@@ -259,6 +249,27 @@ class ItemCollection:
     def collection_append(self, new_item: Item):
         self.Itemlist.append(new_item)
         self.__post_init__()
+
+    def stats(self):
+        if self.items_number > 0:
+            items_number = self.items_number
+            items_prices = [x.price for x in self.Itemlist]
+            mean_price = statistics.fmean(items_prices)
+            median = statistics.median(items_prices)
+            if self.items_number > 1:
+                stdev = round(statistics.stdev(items_prices), 2)
+            else:
+                stdev = None
+
+            stats_dict = {
+                "tot_num": items_number,
+                "mean_price": mean_price,
+                "median": median,
+                "stdev": stdev,
+            }
+            return stats_dict
+        else:
+            raise KeyError("No items were passed")
 
     def order_by_price(self):
         self.Itemlist.sort()

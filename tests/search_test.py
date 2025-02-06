@@ -19,5 +19,22 @@ async def test_fetch_data():
     item = "Iphone 14"
     data_short = await search.search(itemname=item)
     data_long = await search.search(itemname=item, short=False)
+
+    print(data_short.Itemlist[0])
+    print(data_long[0])
+
     assert len(data_short) > 0
     assert len(data_long) > 0
+
+
+@pytest.mark.asyncio
+async def test_ItemCollection():
+    search = subitopy.Search()
+    item1 = "Iphone 14"
+    item2 = "Iphone 14 pro"
+    data_1 = await search.search(itemname=item1)
+    data_2 = await search.search(itemname=item2)
+
+    print((data_1 + data_2).stats())
+
+    assert len(data_1 + data_2) > 100
