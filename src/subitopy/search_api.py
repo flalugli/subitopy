@@ -283,6 +283,7 @@ class Search:
         description = item["body"]
         city = item["geo"]["city"]["short_name"]
         insertion_date = item["dates"]["display"]
+                
 
         images = ()
         all_images = item["images"]
@@ -296,12 +297,15 @@ class Search:
         sold = "NO"
         shipping = True
         price = 0
+        condition = "Sconosciuta"
 
         for f in features:
-            if f["uri"] == "/price":
+            if f["uri"] == "/price" and price == 0: #and avoids going through the checks if the value has been found
                 price = int(f["values"][0]["key"])
-            if f["uri"] == "/transaction_status":
+            if f["uri"] == "/transaction_status" and sold == "NO":
                 sold = f["values"][0]["value"]
+            if f["uri"] == "/item_condition":
+                condition = f["values"][0]["value"]
             if f["uri"] == "/item_shippable":
                 if f["values"][0]["key"] == "0":
                     shipping = False
@@ -316,6 +320,7 @@ class Search:
             date=datetime.strptime(insertion_date, "%Y-%m-%d %H:%M:%S"),
             price=price,
             sold=sold,
+            condition=condition,
             city=city,
             shipping=shipping,
             url=url,

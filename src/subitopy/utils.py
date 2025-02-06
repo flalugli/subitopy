@@ -204,14 +204,15 @@ class AsyncRequest:
 class Item:
     name: str
     descritpion: str
-    images: str
-    date: datetime.datetime
-    city: str
     price: int
+    url: str
+    date: datetime.datetime
+    condition : str
+    city: str
     sold: str
     shipping: bool
     city: str
-    url: str
+    images: str
 
     def __post_init__(self):
         self.sort_index = self.price
