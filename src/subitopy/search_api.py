@@ -49,7 +49,25 @@ class Search:
         return result
 
     async def get_page(self, query: dict, items_only: bool = True) -> dict:
+        """fetches a subito.it page given a query and it's item insertion
 
+        Parameters
+        ----------
+        query : dict
+            request query
+        items_only : bool, optional
+            if set to True the function will return only item ads, by default True
+
+        Returns
+        -------
+        dict
+            a dictionary containing every item ad 
+
+        Raises
+        ------
+        MunicipalityError
+            
+        """
         page: dict = await self.request.get(
             url=self.search_api_url, params=query, proxy=self.proxy
         )
