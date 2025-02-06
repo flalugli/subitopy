@@ -61,12 +61,12 @@ class Search:
         Returns
         -------
         dict
-            a dictionary containing every item ad 
+            a dictionary containing every item ad
 
         Raises
         ------
         MunicipalityError
-            
+
         """
         page: dict = await self.request.get(
             url=self.search_api_url, params=query, proxy=self.proxy
@@ -123,7 +123,7 @@ class Search:
         Raises
         ------
         MunicipalityError
-        
+
         """
         page = await self.get_page(query, items_only=False)
         n = page["count_all"]
@@ -179,7 +179,7 @@ class Search:
         Raises
         ------
         MunicipalityError
-            
+
         """
         # short is short format with less informations for each item and on by default, pages should never be more than 20, proxy might not work otherwise and you might get ratelimited
 
