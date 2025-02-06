@@ -218,6 +218,18 @@ class Search:
         return data
 
     def get_item_shortinfo(self, item: dict) -> Item:
+        """transforms a standard subito.it item ad in json format to a Item object
+
+        Parameters
+        ----------
+        item : dict
+            item ad passed as a python dictionary
+
+        Returns
+        -------
+        Item
+            item transformed to a python object
+        """
 
         item_name = item["subject"]
         description = item["body"]
