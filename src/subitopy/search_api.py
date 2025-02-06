@@ -108,6 +108,23 @@ class Search:
         return page_short
 
     async def count_all_items(self, query: dict) -> int:
+        """counts all items in a page and returns the corresponding integer
+
+        Parameters
+        ----------
+        query : dict
+            request query
+
+        Returns
+        -------
+        int
+            number of items in the page
+
+        Raises
+        ------
+        MunicipalityError
+        
+        """
         page = await self.get_page(query, items_only=False)
         n = page["count_all"]
         return n
