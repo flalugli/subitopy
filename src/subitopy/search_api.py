@@ -265,17 +265,6 @@ class Search:
 
         return data
 
-    async def get_advertiser_reviews(
-        self, advertiser: Advertiser, limit: int = 30, page_n: int = 0
-    ):
-        user_type = "MEMBER" if not advertiser.is_company else "COMPANY"
-
-        url = f"https://feedback-api-subito.trust.advgo.net/public/users/sdrn:subito:user:{advertiser.user_id}/feedback"
-        query = {"limit": limit, "page": page_n, "sources": user_type}
-
-        r = await self.request.get(url=url, params=query, proxy=self.proxy)
-
-        return r
 
     def get_item_shortinfo(self, item: dict) -> Item:
         """transforms a standard subito.it item ad in json format to a Item object

@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import statistics
 from dataclasses import dataclass, field
+from async_lru  import alru_cache
 
 import aiohttp
 
@@ -200,11 +201,32 @@ class AsyncRequest:
         return await self.request(request_type="get", url=url, *args, **kwargs)
 
 
-@dataclass
+@dataclass(unsafe_hash=True)
 class Advertiser:
     user_id: int
     is_company: bool
 
+    @alru_cache(maxsize=32)
+    async def get_feedback(
+        self, limit: int = 30, page_n: int = 0, proxy = None
+    ):
+        asyncrequest = AsyncRequest(tries=3)
+        user_type = "MEMBER" if not self.is_company else "COMPANY"
+
+        url = f"https://feedback-api-subito.trust.advgo.net/public/users/sdrn:subito:user:{self.user_id}/feedback"
+        query = {"limit": limit, "page": page_n, "sources": user_type}
+
+        r = await asyncrequest.get(url=url, params=query, proxy=proxy)
+        
+        return r
+    
+    async def reviews(self):
+        r= await self.get_feedback()
+        return r["result"]
+
+    async def reputation(self):
+        r= await self.get_feedback()
+        return r["reputation"]
 
 @dataclass(order=True)  # standard order is by price
 class Item:

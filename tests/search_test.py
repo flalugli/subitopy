@@ -20,8 +20,8 @@ async def test_fetch_data():
     data_short = await search.search(itemname=item)
     data_long = await search.search(itemname=item, short=False)
 
-    print(data_short.Itemlist[0])
-    print(data_long[0])
+    #print(data_short.Itemlist[0])
+    #print(data_long[0])
 
     assert len(data_short) > 0
     assert len(data_long) > 0
@@ -47,7 +47,6 @@ async def test_Advertiser_reviews():
 
     data = await search.search(itemname=item1)
     adv = data.Itemlist[0].advertiser
-    revs = await search.get_advertiser_reviews(adv)
+    revs = await adv.reputation()
     print(revs)
-
     assert True
