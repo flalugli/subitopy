@@ -230,7 +230,7 @@ class Search:
                 "lim": 1,
             }
             total_items = await self.count_all_items(query)
-            pages = math.ceil(total_items / page_results)
+            pages = math.ceil(total_items / page_results) #could also just use int()
         for n in range(pages):
             endpoint = (n + 1 + startingpage) * page_results
             startingpoint = endpoint - page_results
