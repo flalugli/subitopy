@@ -38,3 +38,15 @@ async def test_ItemCollection():
     print((data_1 + data_2).stats())
 
     assert len(data_1 + data_2) > 100
+
+@pytest.mark.asyncio
+async def test_Advertiser_reviews():
+    search = subitopy.Search()
+    item1 = "Iphone 14"
+    
+    data = await search.search(itemname=item1)
+    adv=data.Itemlist[0].advertiser
+    revs= await search.get_advertiser_reviews(adv)
+    print(revs)
+
+    assert True
