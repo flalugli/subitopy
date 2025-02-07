@@ -217,6 +217,13 @@ class Advertiser:
         query = {"limit": limit, "page": page_n, "sources": user_type}
 
         r = await asyncrequest.get(url=url, params=query, proxy=proxy)
+        tot_reviews = r["reputation"]["sourceCounts"]["MEMBER"] #depends if subito re emplements automatic reviews in that case whatch ["reputattion"]["receivedCount"]
+        if tot_reviews > 30:
+            pages = int(tot_reviews / 30)
+        for page in range(pages):
+            query["page"] = page+1
+            new_r = await asyncrequest.get(url=url, params=query, proxy=proxy)
+            r["result"] += new_r["result"]
         
         return r
     
