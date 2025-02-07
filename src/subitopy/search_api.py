@@ -265,18 +265,16 @@ class Search:
 
         return data
 
-    async def get_advertiser_reviews(self, advertiser:Advertiser, limit:int = 30, page_n:int=0):
+    async def get_advertiser_reviews(
+        self, advertiser: Advertiser, limit: int = 30, page_n: int = 0
+    ):
         user_type = "MEMBER" if not advertiser.is_company else "COMPANY"
-        
+
         url = f"https://feedback-api-subito.trust.advgo.net/public/users/sdrn:subito:user:{advertiser.user_id}/feedback"
-        query = {
-            "limit" : limit,
-            "page" : page_n,
-            "sources" : user_type
-        }
-        
-        r = await self.request.get(url=url, params=query , proxy=self.proxy)
-        
+        query = {"limit": limit, "page": page_n, "sources": user_type}
+
+        r = await self.request.get(url=url, params=query, proxy=self.proxy)
+
         return r
 
     def get_item_shortinfo(self, item: dict) -> Item:
@@ -297,10 +295,10 @@ class Search:
         description = item["body"]
         city = item["geo"]["city"]["short_name"]
         insertion_date = item["dates"]["display"]
-        
+
         adv_dict = item["advertiser"]
-        is_company= True if adv_dict["company"] == True else False
-        advertiser = Advertiser(user_id=adv_dict["user_id"],is_company=is_company)
+        is_company = True if adv_dict["company"] == True else False
+        advertiser = Advertiser(user_id=adv_dict["user_id"], is_company=is_company)
 
         images = ()
         all_images = item["images"]
