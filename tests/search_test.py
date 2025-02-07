@@ -42,11 +42,8 @@ async def test_ItemCollection():
 
 @pytest.mark.asyncio
 async def test_Advertiser_reviews():
-    search = subitopy.Search()
-    item1 = "Iphone 14"
-
-    data = await search.search(itemname=item1)
-    adv = data.Itemlist[0].advertiser
-    revs = await adv.reputation()
-    print(revs)
-    assert True
+    
+    adv = subitopy.utils.Advertiser(user_id=1823198,is_company=False)
+    revs = await adv.reviews()
+    
+    assert len(revs) > 1
