@@ -238,7 +238,7 @@ class Advertiser:
 
 @dataclass(order=True)  # standard order is by price
 class Item:
-    item_id : int
+    item_id: int
     name: str
     descritpion: str
     price: int
