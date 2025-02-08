@@ -279,6 +279,7 @@ class Search:
             item transformed to a python object
         """
 
+        item_id = int(item["urn"].split(":")[-1]) #this is the ending number in the urn (after list:), used also after for the url
         item_name = item["subject"]
         description = item["body"]
         city = item["geo"]["city"]["short_name"]
@@ -319,11 +320,12 @@ class Search:
 
         url = item["urls"]["default"]
         item_info: Item = Item(
+            item_id,
             name=item_name,
             descritpion=description,
             images=images,
             date=datetime.strptime(insertion_date, "%Y-%m-%d %H:%M:%S"),
-            price=price,
+            price=price, #in euros
             sold=sold,
             condition=condition,
             city=city,

@@ -20,7 +20,7 @@ async def test_fetch_data():
     data_short = await search.search(itemname=item)
     data_long = await search.search(itemname=item, short=False)
 
-    # print(data_short.Itemlist[0])
+    print(data_short.Itemlist[0])
     # print(data_long[0])
 
     assert len(data_short) > 0
