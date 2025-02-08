@@ -2,9 +2,9 @@ import asyncio
 import datetime
 import statistics
 from dataclasses import dataclass, field
-from async_lru  import alru_cache
 
 import aiohttp
+from async_lru import alru_cache
 
 
 class QueryParameters:
@@ -207,9 +207,7 @@ class Advertiser:
     is_company: bool
 
     @alru_cache(maxsize=32)
-    async def get_feedback(
-        self, limit: int = 30, page_n: int = 0, proxy = None
-    ):
+    async def get_feedback(self, limit: int = 30, page_n: int = 0, proxy=None):
         asyncrequest = AsyncRequest(tries=3)
         user_type = "MEMBER" if not self.is_company else "COMPANY"
 
@@ -217,23 +215,26 @@ class Advertiser:
         query = {"limit": limit, "page": page_n, "sources": user_type}
 
         r = await asyncrequest.get(url=url, params=query, proxy=proxy)
-        tot_reviews = r["reputation"]["sourceCounts"]["MEMBER"] #depends if subito re emplements automatic reviews in that case whatch ["reputattion"]["receivedCount"]
+        tot_reviews = r["reputation"]["sourceCounts"][
+            "MEMBER"
+        ]  # depends if subito re emplements automatic reviews in that case whatch ["reputattion"]["receivedCount"]
         if tot_reviews > 30:
             pages = int(tot_reviews / 30)
         for page in range(pages):
-            query["page"] = page+1
+            query["page"] = page + 1
             new_r = await asyncrequest.get(url=url, params=query, proxy=proxy)
             r["result"] += new_r["result"]
-        
+
         return r
-    
+
     async def reviews(self):
-        r= await self.get_feedback()
+        r = await self.get_feedback()
         return r["result"]
 
     async def reputation(self):
-        r= await self.get_feedback()
+        r = await self.get_feedback()
         return r["reputation"]
+
 
 @dataclass(order=True)  # standard order is by price
 class Item:

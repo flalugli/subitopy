@@ -4,7 +4,7 @@ from datetime import datetime
 from itertools import chain
 
 from .errors import MunicipalityError
-from .utils import AsyncRequest, Item, ItemCollection, QueryParameters, Advertiser
+from .utils import Advertiser, AsyncRequest, Item, ItemCollection, QueryParameters
 
 
 class Search:
@@ -230,7 +230,7 @@ class Search:
                 "lim": 1,
             }
             total_items = await self.count_all_items(query)
-            pages = math.ceil(total_items / page_results) #could also just use int()
+            pages = math.ceil(total_items / page_results)  # could also just use int()
         for n in range(pages):
             endpoint = (n + 1 + startingpage) * page_results
             startingpoint = endpoint - page_results
@@ -264,7 +264,6 @@ class Search:
                 )  # get items from each page all in one array
 
         return data
-
 
     def get_item_shortinfo(self, item: dict) -> Item:
         """transforms a standard subito.it item ad in json format to a Item object

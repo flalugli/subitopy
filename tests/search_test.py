@@ -20,8 +20,8 @@ async def test_fetch_data():
     data_short = await search.search(itemname=item)
     data_long = await search.search(itemname=item, short=False)
 
-    #print(data_short.Itemlist[0])
-    #print(data_long[0])
+    # print(data_short.Itemlist[0])
+    # print(data_long[0])
 
     assert len(data_short) > 0
     assert len(data_long) > 0
@@ -42,8 +42,8 @@ async def test_ItemCollection():
 
 @pytest.mark.asyncio
 async def test_Advertiser_reviews():
-    
-    adv = subitopy.utils.Advertiser(user_id=1823198,is_company=False)
+
+    adv = subitopy.utils.Advertiser(user_id=1823198, is_company=False)
     revs = await adv.reviews()
-    
+
     assert len(revs) > 1
