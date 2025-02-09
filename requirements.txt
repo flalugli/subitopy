@@ -1,4 +1,3 @@
-aiohttp
-asyncio
-pytest
-pytest-asyncio
+aiohttp==3.11.11
+async_lru==2.0.4
+pytest==8.3.4
