@@ -24,7 +24,7 @@ class Search:
         api_version : int, optional
             api version you want to use, by default 1
         proxy : str | None, optional
-            if passed all the requests will be made passing through this proxy.  
+            if passed all the requests will be made passing through this proxy.
             Format should be "http://username:password@host:port" , by default None
 
         """
