@@ -203,6 +203,7 @@ class AsyncRequest:
 
 @dataclass(unsafe_hash=True)
 class Advertiser:
+    "class that represents a user that posted an ad for an item on subito.it"
     user_id: int
     is_company: bool
 
@@ -238,6 +239,7 @@ class Advertiser:
 
 @dataclass(order=True)  # standard order is by price
 class Item:
+    "class to store item ads from the subito.it api"
     item_id: int
     name: str
     descritpion: str
@@ -258,6 +260,7 @@ class Item:
 
 @dataclass
 class ItemCollection:
+    "class to store collection of Item objects, useful for statistics on prices and for performing operations on Item objects"
 
     Itemlist: list[Item] = field(default_factory=list)
     items_number: int = field(init=False)
