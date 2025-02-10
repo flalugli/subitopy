@@ -72,10 +72,10 @@ async def test_cached_search():
     item = "Iphone 14"
 
     now = time.time()
-    data_now = await search.cached_search(itemname=item, pages=5)
+    data_now = await search.cached_search(itemname=item, pages=10)
     after = time.time()
     now2 = time.time()
-    data_after = await search.cached_search(itemname=item, pages=5)
+    data_after = await search.cached_search(itemname=item, pages=10)
     after2 = time.time()
 
     delta_2 = after2 - now2

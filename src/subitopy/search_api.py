@@ -6,8 +6,7 @@ from itertools import chain
 from async_lru import alru_cache
 
 from .errors import MunicipalityError
-from .utils import (Advertiser, AsyncRequest, Item, ItemCollection,
-                    QueryParameters)
+from .utils import Advertiser, AsyncRequest, Item, ItemCollection, QueryParameters
 
 
 class Search:
@@ -260,17 +259,20 @@ class Search:
             if short:
                 r = self.get_page_short(query)
                 tasks.append(asyncio.ensure_future(r))
-                results = await asyncio.gather(*tasks)
-                item_list = list(chain(*results))
-                data = ItemCollection(
-                    item_list
-                )  # get items from each page all in 1 ItemCollection
+
             else:
                 tasks.append(asyncio.ensure_future(self.get_page(query)))
-                results = await asyncio.gather(*tasks)
-                data = list(
-                    chain(*results)
-                )  # get items from each page all in one array
+
+        # this being outside the loop makes the whole thing really async
+        if short:
+            results = await asyncio.gather(*tasks)
+            item_list = list(chain(*results))
+            data = ItemCollection(
+                item_list
+            )  # get items from each page all in 1 ItemCollection
+        else:
+            results = await asyncio.gather(*tasks)
+            data = list(chain(*results))  # get items from each page all in one array
 
         return data
 
