@@ -4,8 +4,7 @@ from datetime import datetime
 from itertools import chain
 
 from .errors import MunicipalityError
-from .utils import (Advertiser, AsyncRequest, Item, ItemCollection,
-                    QueryParameters)
+from .utils import Advertiser, AsyncRequest, Item, ItemCollection, QueryParameters
 
 
 class Search:
