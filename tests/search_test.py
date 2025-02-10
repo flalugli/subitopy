@@ -29,6 +29,20 @@ async def test_fetch_data():
 
 
 @pytest.mark.asyncio
+async def test_fetch_data_2pages():
+    search = subitopy.Search()
+    item = "Iphone 14"
+    data_short = await search.search(itemname=item, pages=2)
+    data_long = await search.search(itemname=item, short=False, pages=2)
+
+    print(len(data_short))
+    # print(data_long[0])
+
+    assert len(data_short) > 101
+    assert len(data_long) > 101
+
+
+@pytest.mark.asyncio
 async def test_fetch_data_filtered():
     search = subitopy.Search()
     item = "iphone 14"
