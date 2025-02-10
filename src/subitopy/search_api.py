@@ -194,7 +194,7 @@ class Search:
         Raises
         ------
         MunicipalityError
-            
+
         """
         # short is short format with less informations for each item and on by default, pages should never be more than 20, proxy might not work otherwise and you might get ratelimited
 

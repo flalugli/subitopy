@@ -90,14 +90,12 @@ class QueryParameters:
 
         FOR_SALE = "s"
         WANTED = "k"
-    
+
     class Conditions:
-        COME_NUOVO:10
-        OTTIME:20
-        BUONE:30
-        DANNEGGIATO:40
-
-
+        COME_NUOVO: 10
+        OTTIME: 20
+        BUONE: 30
+        DANNEGGIATO: 40
 
 
 class AsyncRequest:
