@@ -2,7 +2,7 @@ import asyncio
 import math
 from datetime import datetime
 from itertools import chain
-
+from async_lru import alru_cache
 from .errors import MunicipalityError
 from .utils import Advertiser, AsyncRequest, Item, ItemCollection, QueryParameters
 
@@ -270,6 +270,42 @@ class Search:
                 )  # get items from each page all in one array
 
         return data
+    
+    @alru_cache(maxsize=256,ttl=1800)
+    async def cached_search(
+        self,
+        itemname: str,
+        category: int | str = QueryParameters.Categories.EMPTY,
+        page_results: int = 100,
+        sort_by: int | str = QueryParameters.Sort.DATE,
+        ad_type: int | str = QueryParameters.Ad_Type.FOR_SALE,
+        region: int | str = QueryParameters.Regions.EMPTY,
+        titlesearch_only: bool = True,  # this is False by standard on the site but it narrows down the research
+        shipping_only: bool = False,
+        municipality: str = "",
+        pages: int | str = 1,
+        startingpage: int = 0,
+        conditions: list[int] | list[QueryParameters.Conditions] = [],
+        short: bool = True,
+    ) -> list | ItemCollection:
+        
+        result = await self.search(
+            itemname=itemname,
+            category=category,
+            page_results=page_results,
+            sort_by=sort_by,
+            ad_type=ad_type,
+            region=region,
+            titlesearch_only=titlesearch_only,
+            shipping_only=shipping_only,
+            municipality=municipality,
+            pages=pages,
+            startingpage=startingpage,
+            conditions=conditions,
+            short=short,
+        )
+
+        return result
 
     def get_item_shortinfo(self, item: dict) -> Item:
         """transforms a standard subito.it item ad in json format to a Item object

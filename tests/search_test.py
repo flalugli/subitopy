@@ -1,6 +1,6 @@
 import os
 import sys
-
+import time
 # Add the 'src' directory to the sys.path for module discovery
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
@@ -62,3 +62,25 @@ async def test_Advertiser_reviews():
     revs = await adv.reviews()
 
     assert len(revs) > 1
+
+@pytest.mark.asyncio
+async def test_cached_search():
+
+    search = subitopy.Search()
+    item = "Iphone 14"
+    
+    now=time.time()
+    data_now = await search.cached_search(itemname=item,pages=5)
+    after=time.time()
+    now2=time.time()
+    data_after = await search.cached_search(itemname=item,pages=5)
+    after2=time.time()
+
+    delta_2 = after2-now2
+    delta_1 =  after-now
+
+    print(delta_2)
+    print(delta_1)
+
+    assert len(data_now.Itemlist) > 1 and len(data_after.Itemlist) >1 
+    assert delta_2 < delta_1
