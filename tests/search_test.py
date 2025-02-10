@@ -48,10 +48,11 @@ async def test_fetch_data_filtered():
     item = "iphone 14"
     data_short = await search.search(itemname=item, pages=5, conditions=[20, 30, 40])
 
-    items = data_short.filter(
+    items = data_short.filter_strings(
         ["rotto", "non funzionante", "danneggiato"],
         search_inname=["cover", "custodia", "pro"],
     )
+
     print(items.stats())
 
     assert len(items) > 1
@@ -86,10 +87,10 @@ async def test_cached_search():
     item = "Iphone 14"
 
     now = time.time()
-    data_now = await search.cached_search(itemname=item, pages=10)
+    data_now = await search.cached_search(itemname=item, pages=5)
     after = time.time()
     now2 = time.time()
-    data_after = await search.cached_search(itemname=item, pages=10)
+    data_after = await search.cached_search(itemname=item, pages=5)
     after2 = time.time()
 
     delta_2 = after2 - now2

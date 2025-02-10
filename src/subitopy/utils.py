@@ -215,7 +215,7 @@ class ItemCollection:
 
     def __post_init__(
         self,
-    ):  # this makes it highly inefficient, maybe move it to a custom function
+    ): 
         if len(self.Itemlist) > 0:
             self.items_number = len(self.Itemlist)
 
@@ -270,7 +270,7 @@ class ItemCollection:
     def return_list_timeorder(self) -> list[Item]:
         return sorted(self.Itemlist, key=lambda x: x.date.timestamp())
 
-    def filter(
+    def filter_strings(
         self,
         search_everywhere: list[str] = [],
         search_inname: list[str] = [],
@@ -294,3 +294,16 @@ class ItemCollection:
                 filtered_items.append(item)
 
         return ItemCollection(Itemlist=filtered_items)
+
+    def remove_sold_items(self):
+        for item in self.Itemlist:
+            if item.sold != "NO":
+                self.Itemlist.remove(item)
+
+    def pop_sold_items(self):
+        sold_items = []
+        for item in self.Itemlist:
+            if item.sold != "NO":
+                sold_items.append(item)
+                self.Itemlist.remove(item)
+        return ItemCollection(sold_items)
