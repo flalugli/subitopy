@@ -256,6 +256,21 @@ class Item:
 
     def __post_init__(self):
         self.sort_index = self.price
+    
+    def check_strings(self, search_everywhere:list[str], search_inname:list[str] = [], search_indescription:list[str]=[]) -> bool:
+        name_lower= self.name.lower()
+        description_lower = self.descritpion.lower()
+        for s in search_everywhere:
+            if s in name_lower or s in description_lower:
+                    return False
+        for s in search_inname:
+            if s in name_lower:
+                return False
+        for s in search_indescription:
+            if s in description_lower:
+                return False
+        
+        return True
 
 
 @dataclass
@@ -321,3 +336,15 @@ class ItemCollection:
 
     def return_list_timeorder(self) -> list[Item]:
         return sorted(self.Itemlist, key=lambda x: x.date.timestamp())
+
+    def filter(self, search_everywhere:list[str] = [],search_inname:list[str] = [], search_indescription:list[str] = []):
+        
+        if search_everywhere == [] and search_inname == [] and search_indescription == []: 
+            return self.Itemlist
+        
+        filtered_items = []
+        for item in self.Itemlist:
+            if item.check_strings(search_everywhere=search_everywhere,search_inname=search_inname,search_indescription=search_indescription):
+                filtered_items.append(item)
+        
+        return ItemCollection(Itemlist=filtered_items)
