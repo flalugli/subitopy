@@ -137,12 +137,6 @@ class QueryParameters:
         "Servizi": 50,
     }
 
-    sort_by = {
-        "date": "datedesc",
-        "lowest price": "priceasc",
-        "highest price": "pricedesc",
-    }
-
     ad_type = {"for sale": "s", "wanted": "k"}
 
     regions = {
