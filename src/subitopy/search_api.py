@@ -154,7 +154,7 @@ class Search:
         municipality: str = "",
         pages: int | str = 1,
         startingpage: int = 0,
-        filters:list[int] | list[QueryParameters] = [],
+        filters: list[int] | list[QueryParameters] = [],
         short: bool = True,
     ) -> list | ItemCollection:
         """search api call
@@ -230,7 +230,7 @@ class Search:
                 "sort": sort_by,
                 "start": 0,
                 "lim": 1,
-                "ic" : ",".join(str(s) for s in filters),
+                "ic": ",".join(str(s) for s in filters),
             }
             total_items = await self.count_all_items(query)
             pages = math.ceil(total_items / page_results)  # could also just use int()
@@ -250,7 +250,7 @@ class Search:
                 "sort": sort_by,
                 "start": startingpoint,
                 "lim": endpoint,
-                "ic" : ",".join(str(s) for s in filters),
+                "ic": ",".join(str(s) for s in filters),
             }
             if short:
                 r = self.get_page_short(query)
