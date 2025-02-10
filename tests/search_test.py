@@ -26,21 +26,17 @@ async def test_fetch_data():
     assert len(data_short) > 0
     assert len(data_long) > 0
 
-
 @pytest.mark.asyncio
 async def test_fetch_data_filtered():
     search = subitopy.Search()
     item = "Iphone 14 128gb"
-    data_short = await search.search(itemname=item, pages=5)
+    data_short = await search.search(itemname=item,pages=10,filters=[20,30,40])
 
-    items = data_short.filter(
-        ["rotto", "non funzionante", "danneggiato"],
-        search_inname=["cover", "custodia", "pro"],
-    )
+    items = data_short.filter(["rotto", "non funzionante", "danneggiato"],search_inname=["cover", "custodia", "pro"])
     print(items.stats())
 
     assert len(items) > 1
-
+    
 
 @pytest.mark.asyncio
 async def test_ItemCollection():
