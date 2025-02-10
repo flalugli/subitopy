@@ -30,8 +30,8 @@ async def test_fetch_data():
 @pytest.mark.asyncio
 async def test_fetch_data_filtered():
     search = subitopy.Search()
-    item = "Iphone 14 128gb"
-    data_short = await search.search(itemname=item, pages=10, filters=[20, 30, 40])
+    item = "iphone 14"
+    data_short = await search.search(itemname=item, pages=5, conditions=[20, 30, 40])
 
     items = data_short.filter(
         ["rotto", "non funzionante", "danneggiato"],
