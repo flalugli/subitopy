@@ -154,7 +154,7 @@ class Search:
         municipality: str = "",
         pages: int | str = 1,
         startingpage: int = 0,
-        filters: list[int] | list[QueryParameters] = [],
+        conditions: list[int] | list[QueryParameters.Conditions] = [],
         short: bool = True,
     ) -> list | ItemCollection:
         """search api call
@@ -181,8 +181,8 @@ class Search:
             number of pages retrieved by the api, it's suggested to limit of pages fetched as this could cause ip limitations, if you want to retrieve all the pages set this to 'all', by default 1
         startingpage : int, optional
             the starting page, by default 0
-        filters : list[int] | list[QueryParameters], optional
-            filters for search, not appliable to some categories, by default []
+        conditions : list[int] | list[QueryParameters], optional
+            conditions of the items, not appliable to some categories, by default []
         short : bool, optional
             if set to true the function will perform the get_item_shortinfo function on every item ad, by default True
 
@@ -232,7 +232,7 @@ class Search:
                 "sort": sort_by,
                 "start": 0,
                 "lim": 1,
-                "ic": ",".join(str(s) for s in filters),
+                "ic": ",".join(str(s) for s in conditions),
             }
             total_items = await self.count_all_items(query)
             pages = math.ceil(total_items / page_results)  # could also just use int()
@@ -252,7 +252,7 @@ class Search:
                 "sort": sort_by,
                 "start": startingpoint,
                 "lim": endpoint,
-                "ic": ",".join(str(s) for s in filters),
+                "ic": ",".join(str(s) for s in conditions),
             }
             if short:
                 r = self.get_page_short(query)
