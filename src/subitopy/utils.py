@@ -135,7 +135,7 @@ class Advertiser:
     user_id: int
     is_company: bool
 
-    @alru_cache(ttl=3600) # we use maxsize=128 here so that if a page is scanned twice 
+    @alru_cache(ttl=3600)  # we use maxsize=128 here so that if a page is scanned twice
     async def get_feedback(self, limit: int = 30, page_n: int = 0, proxy=None):
         asyncrequest = AsyncRequest(tries=3)
         user_type = "MEMBER" if not self.is_company else "COMPANY"

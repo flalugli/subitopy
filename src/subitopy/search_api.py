@@ -2,9 +2,12 @@ import asyncio
 import math
 from datetime import datetime
 from itertools import chain
+
 from async_lru import alru_cache
+
 from .errors import MunicipalityError
-from .utils import Advertiser, AsyncRequest, Item, ItemCollection, QueryParameters
+from .utils import (Advertiser, AsyncRequest, Item, ItemCollection,
+                    QueryParameters)
 
 
 class Search:
@@ -270,8 +273,8 @@ class Search:
                 )  # get items from each page all in one array
 
         return data
-    
-    @alru_cache(maxsize=256,ttl=1800)
+
+    @alru_cache(maxsize=256, ttl=1800)
     async def cached_search(
         self,
         itemname: str,
@@ -288,7 +291,8 @@ class Search:
         conditions: list[int] | list[QueryParameters.Conditions] = [],
         short: bool = True,
     ) -> list | ItemCollection:
-        
+        "Cached version of the search method, caches with LRU method with a maxsize of 256 and ttl of 1800"
+
         result = await self.search(
             itemname=itemname,
             category=category,
