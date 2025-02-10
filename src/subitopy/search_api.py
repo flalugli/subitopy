@@ -181,6 +181,8 @@ class Search:
             number of pages retrieved by the api, it's suggested to limit of pages fetched as this could cause ip limitations, if you want to retrieve all the pages set this to 'all', by default 1
         startingpage : int, optional
             the starting page, by default 0
+        filters : list[int] | list[QueryParameters], optional
+            filters for search, not appliable to some categories, by default []
         short : bool, optional
             if set to true the function will perform the get_item_shortinfo function on every item ad, by default True
 
@@ -192,7 +194,7 @@ class Search:
         Raises
         ------
         MunicipalityError
-
+            
         """
         # short is short format with less informations for each item and on by default, pages should never be more than 20, proxy might not work otherwise and you might get ratelimited
 
