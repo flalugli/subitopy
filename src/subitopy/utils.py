@@ -176,7 +176,7 @@ class Item:
     date: datetime.datetime
     condition: str
     city: str
-    sold: str
+    sold: str #this can have 3 options, that's why we keep it as str
     shipping: bool
     city: str
     advertiser: Advertiser
@@ -319,4 +319,9 @@ class ItemCollection:
                     new_items.append(item)
 
         return ItemCollection(new_items)    
+
+    def remove_noshipping(self):
+        for item in self.Itemlist:
+            if not item.shipping:
+                self.Itemlist.remove(item)
             
