@@ -92,10 +92,11 @@ class QueryParameters:
         WANTED = "k"
 
     class Conditions:
-        COME_NUOVO: 10
-        OTTIME: 20
-        BUONE: 30
-        DANNEGGIATO: 40
+        NUOVO: 10
+        COME_NUOVO: 20
+        OTTIME: 30
+        BUONE: 40
+        DANNEGGIATO : 50
 
 
 class AsyncRequest:
