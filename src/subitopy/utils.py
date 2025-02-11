@@ -307,3 +307,16 @@ class ItemCollection:
                 sold_items.append(item)
                 self.Itemlist.remove(item)
         return ItemCollection(sold_items)
+    
+    def filter_prices(self, minprice:int = 0 ,maxprice:int = None):
+        new_items = []
+        for item in self.Itemlist:
+            if maxprice == None:
+                if item.price >= minprice:
+                    new_items.append(item)
+            else:
+                if minprice < item.price < maxprice:
+                    new_items.append(item)
+
+        return ItemCollection(new_items)    
+            
