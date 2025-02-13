@@ -180,17 +180,18 @@ class ItemCollection:
         return ItemCollection(matches)
 
     def remove_sold_items(self):
-        for item in self.Itemlist:
-            if item.sold != "NO":
-                self.Itemlist.remove(item)
+        self.Itemlist = [item for item in self.Itemlist if item.sold == "NO"]
         self.__post_init__()
 
     def pop_sold_items(self):
         sold_items = []
+        unsold_items = []
         for item in self.Itemlist:
             if item.sold != "NO":
                 sold_items.append(item)
-                self.Itemlist.remove(item)
+            else:
+                unsold_items.append(item)
+        self.Itemlist = unsold_items
         self.__post_init__()
         return ItemCollection(sold_items)
 
@@ -208,8 +209,6 @@ class ItemCollection:
         self.__post_init__()
 
     def remove_noshipping(self):
-        for item in self.Itemlist:
-            if not item.shipping:
-                self.Itemlist.remove(item)
-
+        self.Itemlist = [item for item in self.Itemlist if item.shipping == True]
+    
         self.__post_init__()
