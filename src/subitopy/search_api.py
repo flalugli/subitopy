@@ -5,8 +5,9 @@ from itertools import chain
 
 from async_lru import alru_cache
 
+from .classes import Advertiser, Item, ItemCollection
 from .errors import MunicipalityError
-from .utils import Advertiser, AsyncRequest, Item, ItemCollection, QueryParameters
+from .utils import AsyncRequest, QueryParameters
 
 
 class Search:
@@ -307,7 +308,7 @@ class Search:
             municipality=municipality,
             pages=pages,
             startingpage=startingpage,
-            conditions=conditions,
+            conditions=tuple(conditions),
             short=short,
         )
 

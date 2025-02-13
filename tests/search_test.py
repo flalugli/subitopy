@@ -74,7 +74,7 @@ async def test_ItemCollection():
 @pytest.mark.asyncio
 async def test_Advertiser_reviews():
 
-    adv = subitopy.utils.Advertiser(user_id=1823198, is_company=False)
+    adv = subitopy.classes.Advertiser(user_id=1823198, is_company=False)
     revs = await adv.reviews()
 
     assert len(revs) > 1
@@ -87,7 +87,7 @@ async def test_cached_search():
     item = "Iphone 14"
 
     now = time.time()
-    data_now = await search.cached_search(itemname=item, pages=5)
+    data_now = await search.cached_search(itemname=item, pages=5, conditions=[20, 30])
     after = time.time()
     now2 = time.time()
     data_after = await search.cached_search(itemname=item, pages=5)
