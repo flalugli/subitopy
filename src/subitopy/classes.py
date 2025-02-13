@@ -175,7 +175,6 @@ class ItemCollection:
             else:
                 matches.append(item)
 
-
         self.Itemlist = filtered_items
         self.__post_init__()
         return ItemCollection(matches)
