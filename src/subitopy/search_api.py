@@ -144,7 +144,7 @@ class Search:
         n = page["count_all"]
         return n
 
-    async def search(
+    async def _standard_search(
         self,
         itemname: str,
         category: int | str = QueryParameters.Categories.EMPTY,
@@ -157,7 +157,7 @@ class Search:
         municipality: str = "",
         pages: int | str = 1,
         startingpage: int = 0,
-        conditions: list[int] | list[QueryParameters.Conditions] = [],
+        conditions: tuple[int] | tuple[QueryParameters.Conditions] = (),
         short: bool = True,
     ) -> list | ItemCollection:
         """search api call
@@ -278,7 +278,7 @@ class Search:
         return data
 
     @alru_cache(maxsize=256, ttl=1800)
-    async def cached_search(
+    async def _cached_search(
         self,
         itemname: str,
         category: int | str = QueryParameters.Categories.EMPTY,
@@ -291,12 +291,12 @@ class Search:
         municipality: str = "",
         pages: int | str = 1,
         startingpage: int = 0,
-        conditions: list[int] | list[QueryParameters.Conditions] = [],
+        conditions: tuple[int] | tuple[QueryParameters.Conditions] = (),
         short: bool = True,
     ) -> list | ItemCollection:
         "Cached version of the search method, caches with LRU method with a maxsize of 256 and ttl of 1800"
 
-        result = await self.search(
+        result = await self._standard_search(
             itemname=itemname,
             category=category,
             page_results=page_results,
@@ -308,11 +308,107 @@ class Search:
             municipality=municipality,
             pages=pages,
             startingpage=startingpage,
-            conditions=tuple(conditions),
+            conditions=conditions,
             short=short,
         )
 
         return result
+    
+    async def search(
+        self,
+        itemname: str,
+        category: int | str = QueryParameters.Categories.EMPTY,
+        page_results: int = 100,
+        sort_by: int | str = QueryParameters.Sort.DATE,
+        ad_type: int | str = QueryParameters.Ad_Type.FOR_SALE,
+        region: int | str = QueryParameters.Regions.EMPTY,
+        titlesearch_only: bool = True,  # this is False by standard on the site but it narrows down the research
+        shipping_only: bool = False,
+        municipality: str = "",
+        pages: int | str = 1,
+        startingpage: int = 0,
+        conditions: tuple[int] | tuple[QueryParameters.Conditions] = (),
+        short: bool = True,
+        cached:bool = False
+    ) -> list | ItemCollection:
+        """search api call
+
+        Parameters
+        ----------
+        itemname : str
+            name of the item to research, it's the ad title
+        category : int | str, optional
+            category to which the item belongs, accepts QueryParameters.Categories, by default QueryParameters.Categories.EMPTY
+        page_results : int, optional
+            number of results per page, can vary from 0 to 100, by default 100
+        sort_by : int | str, optional
+            determines how the matches will be sorted, accepts QueryParameters.Sort, by default QueryParameters.Sort.DATE
+        ad_type : int | str, optional
+            ad type, can be for sale or wanting, accepts QueryParameters.Ad_Type, by default QueryParameters.Ad_Type.FOR_SALE
+        region : int | str, optional
+            region where the ad is located, accepts QueryParameters.Regions, by default QueryParameters.Regions.EMPTY
+        titlesearch_only : bool, optional
+            if set to true all the searches will have to match the words in the title, otherwise they can also match the description, by default True
+        municipality : str, optional
+            the municipality where the ad is located, by default ""
+        pages : int | str, optional
+            number of pages retrieved by the api, it's suggested to limit of pages fetched as this could cause ip limitations, if you want to retrieve all the pages set this to 'all', by default 1
+        startingpage : int, optional
+            the starting page, by default 0
+        conditions : tuple[int] | tuple[QueryParameters], optional
+            conditions of the items, not appliable to some categories, by default ()
+        short : bool, optional
+            if set to true the function will perform the get_item_shortinfo function on every item ad, by default True
+        cached : bool, optional
+            if set to true the function will call _cached_search which will cache the search results, by default False
+            
+        Returns
+        -------
+        list | ItemCollection
+            a collection of Item object that automatically performs some statistics on the item prices whenever a new object is added
+
+        Raises
+        ------
+        MunicipalityError
+
+        """
+
+        if cached:
+            results = await self._cached_search(
+                itemname=itemname,
+                category=category,
+                page_results=page_results,
+                sort_by=sort_by,
+                ad_type=ad_type,
+                region=region,
+                titlesearch_only=titlesearch_only,
+                shipping_only=shipping_only,
+                municipality=municipality,
+                pages=pages,
+                startingpage=startingpage,
+                conditions=tuple(conditions), #to avoid problems when caching results, as you can't hash mutable types
+                short=short,
+            )
+        else:
+            results = await self._standard_search(
+                itemname=itemname,
+                category=category,
+                page_results=page_results,
+                sort_by=sort_by,
+                ad_type=ad_type,
+                region=region,
+                titlesearch_only=titlesearch_only,
+                shipping_only=shipping_only,
+                municipality=municipality,
+                pages=pages,
+                startingpage=startingpage,
+                conditions=tuple(conditions),
+                short=short,
+            )
+        return results
+
+
+            
 
     def get_item_shortinfo(self, item: dict) -> Item:
         """transforms a standard subito.it item ad in json format to a Item object
