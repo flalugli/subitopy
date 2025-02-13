@@ -210,5 +210,5 @@ class ItemCollection:
 
     def remove_noshipping(self):
         self.Itemlist = [item for item in self.Itemlist if item.shipping == True]
-    
+
         self.__post_init__()
