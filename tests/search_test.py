@@ -48,14 +48,14 @@ async def test_fetch_data_filtered():
     item = "iphone 14"
     data_short = await search.search(itemname=item, pages=5, conditions=[20, 30, 40])
 
-    items = data_short.filter_strings(
+    data_short.filter_strings(
         ["rotto", "non funzionante", "danneggiato"],
         search_inname=["cover", "custodia", "pro"],
     )
+    print("FILTERED")
+    print(data_short.stats())
 
-    print(items.stats())
-
-    assert len(items) > 1
+    assert len(data_short) > 1
 
 
 @pytest.mark.asyncio

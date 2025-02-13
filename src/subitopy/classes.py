@@ -65,7 +65,7 @@ class Item:
 
     def check_strings(
         self,
-        search_everywhere: list[str],
+        search_everywhere: list[str] = [],
         search_inname: list[str] = [],
         search_indescription: list[str] = [],
     ) -> bool:
@@ -171,12 +171,14 @@ class ItemCollection:
             ):
                 filtered_items.append(item)
 
-        return ItemCollection(Itemlist=filtered_items)
+        self.Itemlist = filtered_items
+        self.__post_init__()
 
     def remove_sold_items(self):
         for item in self.Itemlist:
             if item.sold != "NO":
                 self.Itemlist.remove(item)
+        self.__post_init__()
 
     def pop_sold_items(self):
         sold_items = []
@@ -184,6 +186,7 @@ class ItemCollection:
             if item.sold != "NO":
                 sold_items.append(item)
                 self.Itemlist.remove(item)
+        self.__post_init__()
         return ItemCollection(sold_items)
 
     def filter_prices(self, minprice: int = 0, maxprice: int = None):
@@ -196,9 +199,12 @@ class ItemCollection:
                 if minprice < item.price < maxprice:
                     new_items.append(item)
 
-        return ItemCollection(new_items)
+        self.Itemlist = new_items
+        self.__post_init__()
 
     def remove_noshipping(self):
         for item in self.Itemlist:
             if not item.shipping:
                 self.Itemlist.remove(item)
+
+        self.__post_init__()
