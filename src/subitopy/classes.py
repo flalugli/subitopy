@@ -154,6 +154,7 @@ class ItemCollection:
         search_inname: list[str] = [],
         search_indescription: list[str] = [],
     ):
+        "This function will return the matches that are also removed from the original collection"
 
         if (
             search_everywhere == []
@@ -163,6 +164,7 @@ class ItemCollection:
             return self.Itemlist
 
         filtered_items = []
+        matches = []
         for item in self.Itemlist:
             if item.check_strings(
                 search_everywhere=search_everywhere,
@@ -170,9 +172,13 @@ class ItemCollection:
                 search_indescription=search_indescription,
             ):
                 filtered_items.append(item)
+            else:
+                matches.append(item)
+
 
         self.Itemlist = filtered_items
         self.__post_init__()
+        return ItemCollection(matches)
 
     def remove_sold_items(self):
         for item in self.Itemlist:
