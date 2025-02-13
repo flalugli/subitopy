@@ -87,10 +87,14 @@ async def test_cached_search():
     item = "Iphone 14"
 
     now = time.time()
-    data_now = await search.search(itemname=item, pages=5, conditions=[20,30], cached=True)
+    data_now = await search.search(
+        itemname=item, pages=5, conditions=[20, 30], cached=True
+    )
     after = time.time()
     now2 = time.time()
-    data_after = await search.search(itemname=item, pages=5, conditions=[20,30],cached = True)
+    data_after = await search.search(
+        itemname=item, pages=5, conditions=[20, 30], cached=True
+    )
     after2 = time.time()
 
     delta_2 = after2 - now2
@@ -101,4 +105,3 @@ async def test_cached_search():
 
     assert len(data_now.Itemlist) > 1 and len(data_after.Itemlist) > 1
     assert delta_2 < delta_1
-

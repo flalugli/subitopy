@@ -313,7 +313,7 @@ class Search:
         )
 
         return result
-    
+
     async def search(
         self,
         itemname: str,
@@ -329,7 +329,7 @@ class Search:
         startingpage: int = 0,
         conditions: tuple[int] | tuple[QueryParameters.Conditions] = (),
         short: bool = True,
-        cached:bool = False
+        cached: bool = False,
     ) -> list | ItemCollection:
         """search api call
 
@@ -361,7 +361,7 @@ class Search:
             if set to true the function will perform the get_item_shortinfo function on every item ad, by default True
         cached : bool, optional
             if set to true the function will call _cached_search which will cache the search results, by default False
-            
+
         Returns
         -------
         list | ItemCollection
@@ -386,7 +386,9 @@ class Search:
                 municipality=municipality,
                 pages=pages,
                 startingpage=startingpage,
-                conditions=tuple(conditions), #to avoid problems when caching results, as you can't hash mutable types
+                conditions=tuple(
+                    conditions
+                ),  # to avoid problems when caching results, as you can't hash mutable types
                 short=short,
             )
         else:
@@ -406,9 +408,6 @@ class Search:
                 short=short,
             )
         return results
-
-
-            
 
     def get_item_shortinfo(self, item: dict) -> Item:
         """transforms a standard subito.it item ad in json format to a Item object
