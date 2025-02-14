@@ -48,7 +48,7 @@ class Item:
     "class to store item ads from the subito.it api"
     item_id: int
     name: str
-    descritpion: str
+    description: str
     price: int
     url: str
     date: datetime.datetime
@@ -70,7 +70,7 @@ class Item:
         search_indescription: list[str] = [],
     ) -> bool:
         name_lower = self.name.lower()
-        description_lower = self.descritpion.lower()
+        description_lower = self.description.lower()
         for s in search_everywhere:
             if s in name_lower or s in description_lower:
                 return False

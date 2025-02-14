@@ -468,7 +468,7 @@ class Search:
         item_info: Item = Item(
             item_id,
             name=item_name,
-            descritpion=description,
+            description=description,
             images=images,
             date=datetime.strptime(insertion_date, "%Y-%m-%d %H:%M:%S"),
             price=price,  # in euros

@@ -1,6 +1,6 @@
 [project]
 name = "subitopy"
-version = "0.4.0"
+version = "0.4.1"
 description = "An async wrapper for the subito.it API"
 authors = [
     {name = "flalugli",email = "flugli@mail.com"}
