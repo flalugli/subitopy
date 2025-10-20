@@ -143,7 +143,7 @@ class ItemCollection:
         self.Itemlist.sort()
 
     def return_list_priceorder(self) -> list[Item]:
-        return sorted(self.Itemlist)
+        return sorted(self.Itemlist) #CONTROLLO DA ALTRO PROGETTO
 
     def return_list_timeorder(self) -> list[Item]:
         return sorted(self.Itemlist, key=lambda x: x.date.timestamp())

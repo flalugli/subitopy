@@ -438,10 +438,12 @@ class Search:
         images = ()
         all_images = item["images"]
         for image in all_images:
-            for scale in image["scale"]:
-                if scale["size"] == "big":
-                    images += (scale["uri"],)
-
+            try:
+                for scale in image["scale"]:
+                    if scale["size"] == "big":
+                        images += (scale["uri"],)
+            except KeyError:
+                pass
         # features
         features = item["features"]
         sold = "NO"
